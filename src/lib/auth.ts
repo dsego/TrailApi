@@ -1,4 +1,5 @@
 import { betterAuth } from 'better-auth'
+import { expo } from "@better-auth/expo";
 import { Pool } from 'pg'
 
 export const auth = betterAuth({
@@ -7,5 +8,9 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
-  }
+  },
+  plugins: [expo()],
+  trustedOrigins: ["trailapp://", "http://localhost:8081"] // FIXME
 })
+
+export default auth

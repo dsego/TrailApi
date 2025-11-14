@@ -1,15 +1,16 @@
 import { Elysia } from "elysia";
 import { openapi } from '@elysiajs/openapi'
+import { Logestic } from 'logestic'
+import { cors } from '@elysiajs/cors'
 
 import { auth } from './lib/auth'
 
 
-const authMiddleware = new Elysia({ name: 'better-auth' })
+const betterAuth = new Elysia({ name: 'better-auth' })
   .mount(auth.handler)
   .macro({
     auth: {
       async resolve({ status, request: { headers } }) {
-        console.log(headers)
         const session = await auth.api.getSession({
           headers
         })
@@ -24,8 +25,15 @@ const authMiddleware = new Elysia({ name: 'better-auth' })
   })
 
 const app = new Elysia()
+  .use(cors({
+    origin: "http://localhost:8081",  // FIXME: this is just for local development
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }))
+  .use(Logestic.preset('common'))
   .use(openapi())
-  .use(authMiddleware)
+  .use(betterAuth)
   .get("/", () => "Hello Elysia")
   .get('/user', ({ user }) => user, {
     auth: true
