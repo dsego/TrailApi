@@ -34,11 +34,11 @@ const app = new Elysia()
   .use(Logestic.preset('common'))
   .use(openapi())
   .use(betterAuth)
-  .get("/", () => "Hello Elysia")
+  .get("/", () => "🦊 Hello Elysia")
   .get('/user', ({ user }) => user, {
     auth: true
   })
-  .listen(3000);
+  .listen(Number(process.env.PORT ?? 3000));
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
