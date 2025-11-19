@@ -7,6 +7,7 @@ app = 'trailapi'
 primary_region = 'ams'
 
 [build]
+  dockerfile = "Dockerfile.flyio"
 
 [env]
   PORT = '8080'
