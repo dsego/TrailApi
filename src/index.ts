@@ -1,6 +1,7 @@
 import { Elysia } from "elysia";
 import { openapi } from '@elysiajs/openapi'
 import { Logestic } from 'logestic'
+import { cors } from "@elysiajs/cors"
 
 import { auth } from './lib/auth'
 
@@ -26,6 +27,14 @@ const betterAuth = new Elysia({ name: 'better-auth' })
 const app = new Elysia()
   .use(Logestic.preset('common'))
   .use(openapi())
+  .use(
+    cors({
+      origin: 'https://trailapp.expo.app',
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }),
+  )
   .use(betterAuth)
   .get("/", () => "🦊 Hello Elysia")
   .get('/user', ({ user }) => user, {
