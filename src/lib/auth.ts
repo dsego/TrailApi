@@ -9,7 +9,12 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  defaultCookieAttributes: {
+    httpOnly: true,
+    secure: true
+  },
   plugins: [expo()],
+  useSecureCookies: true,
   trustedOrigins: [
     "trailapp://",
     "http://localhost:8081",
