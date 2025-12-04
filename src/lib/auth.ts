@@ -19,7 +19,9 @@ export const auth = betterAuth({
   trustedOrigins: [
     "trailapp://",
     "http://localhost:8081",
-    "https://trailapp.expo.app/"
+    "https://trailapp.expo.app/",
+    "exp://*",
+    "expo://*",
   ] // FIXME
 })
 
